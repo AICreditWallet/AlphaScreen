@@ -99,15 +99,15 @@ export default function Home() {
         {/* Short Film */}
         <motion.div 
           whileHover={{ y: -10 }}
-          className="glass-card p-10 rounded-sm space-y-8 flex flex-col justify-between"
+          className="glass-card p-10 rounded-sm space-y-8 flex flex-col justify-between border-white/5"
         >
           <div className="space-y-4">
-            <span className="text-[10px] font-black uppercase tracking-widest text-accent">Studio Entry</span>
-            <h3 className="text-3xl font-black uppercase italic">Short Epic</h3>
-            <p className="text-white/40 text-sm">Up to 30 minutes of high-fidelity cinematic video. Perfect for pilots, shorts, and proof-of-concepts.</p>
+            <span className="text-[10px] font-black uppercase tracking-widest text-accent">Professional Tier</span>
+            <h3 className="text-3xl font-black uppercase italic tracking-tighter">Short Epic</h3>
+            <p className="text-white/40 text-sm leading-relaxed font-medium">For independent pilots and premium proof-of-concepts. 30 minutes of high-fidelity cinematic video.</p>
             <div className="space-y-3 pt-4">
-              {["400+ 4K Shots", "Identity Lock V1", "Standard Render Queue", "Dolby Digital Sync"].map(f => (
-                <div key={f} className="flex items-center gap-2 text-xs font-bold uppercase tracking-tight text-white/60">
+              {["400+ 4K Cinematic Shots", "Elite Identity Locking", "Dedicated Render Worker", "Dolby Digital Atmos Sync"].map(f => (
+                <div key={f} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-tight text-white/60">
                   <ChevronRight className="w-3 h-3 text-accent" /> {f}
                 </div>
               ))}
@@ -115,14 +115,14 @@ export default function Home() {
           </div>
           <div className="pt-8 border-t border-white/5">
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-4xl font-black">$499</span>
-              <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">/ Per Movie</span>
+              <span className="text-4xl font-black text-gradient">$2,599</span>
+              <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">/ Production</span>
             </div>
             <button 
               onClick={() => { setProjectType("short"); setView("studio"); }}
-              className="w-full bg-white text-black py-4 rounded-sm font-black uppercase tracking-widest hover:bg-accent hover:text-white transition-all"
+              className="w-full glass-card hover:bg-white hover:text-black py-4 rounded-sm font-black uppercase tracking-widest transition-all"
             >
-              Enter Studio
+              Initialize Production
             </button>
           </div>
         </motion.div>
@@ -130,16 +130,16 @@ export default function Home() {
         {/* Feature Film */}
         <motion.div 
           whileHover={{ y: -10 }}
-          className="glass-card p-10 rounded-sm border-accent/30 bg-accent/[0.02] space-y-8 flex flex-col justify-between relative overflow-hidden"
+          className="glass-card p-10 rounded-sm border-accent/40 bg-accent/[0.03] space-y-8 flex flex-col justify-between relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 bg-accent text-white px-4 py-1 text-[8px] font-black uppercase tracking-widest -rotate-45 translate-x-4 translate-y-2">Hollywood Standard</div>
+          <div className="absolute top-0 right-0 bg-accent text-white px-6 py-1 text-[8px] font-black uppercase tracking-widest -rotate-45 translate-x-6 translate-y-4 shadow-[0_0_20px_#E50914]">World First</div>
           <div className="space-y-4">
-            <span className="text-[10px] font-black uppercase tracking-widest text-accent">Feature Scale</span>
-            <h3 className="text-3xl font-black uppercase italic">The Masterpiece</h3>
-            <p className="text-white/40 text-sm">Full 2-hour feature length production. Unlimited shots, autonomous editing, and theatrical 4K export.</p>
+            <span className="text-[10px] font-black uppercase tracking-widest text-accent">Feature Tier</span>
+            <h3 className="text-3xl font-black uppercase italic tracking-tighter">The Masterpiece</h3>
+            <p className="text-white/40 text-sm leading-relaxed font-medium">Full 120-minute theatrical feature production. Autonomous editing, and global distribution-ready 4K/8K export.</p>
             <div className="space-y-3 pt-4">
-              {["1,500+ 4K Shots", "Full Narrative World Bible", "Priority GPU Render", "Global Distribution Export"].map(f => (
-                <div key={f} className="flex items-center gap-2 text-xs font-bold uppercase tracking-tight text-white/60">
+              {["1,500+ Cinema-Grade Shots", "Full Narrative Continuity Bible", "Priority Multi-GPU Rendering", "Theatrical Mastering & Export"].map(f => (
+                <div key={f} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-tight text-white/60">
                   <ChevronRight className="w-3 h-3 text-accent" /> {f}
                 </div>
               ))}
@@ -147,14 +147,14 @@ export default function Home() {
           </div>
           <div className="pt-8 border-t border-white/5">
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-4xl font-black">$1,999</span>
-              <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">/ Per Movie</span>
+              <span className="text-5xl font-black text-gradient">$8,999</span>
+              <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">/ Production</span>
             </div>
             <button 
               onClick={() => { setProjectType("full"); setView("studio"); }}
-              className="w-full bg-accent text-white py-4 rounded-sm font-black uppercase tracking-widest hover:bg-accent-hover transition-all shadow-[0_0_20px_rgba(229,9,20,0.3)]"
+              className="w-full bg-accent text-white py-4 rounded-sm font-black uppercase tracking-widest hover:bg-accent-hover transition-all shadow-[0_0_30px_rgba(229,9,20,0.3)]"
             >
-              Start Production
+              Start Full Production
             </button>
           </div>
         </motion.div>
