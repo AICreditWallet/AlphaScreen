@@ -48,7 +48,7 @@ export default function Home() {
   // --- SUB-COMPONENTS ---
 
   const Navbar = () => (
-    <nav className="fixed top-0 w-full z-[150] px-6 md:px-12 h-24 flex items-center justify-between bg-black/50 backdrop-blur-2xl border-b border-white/5 pointer-events-auto">
+    <nav className="fixed top-0 w-full z-[200] px-6 md:px-12 h-24 flex items-center justify-between bg-black/80 backdrop-blur-3xl border-b border-white/5 pointer-events-auto shadow-2xl">
       <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView("landing")}>
         <div className="w-10 h-10 bg-accent flex items-center justify-center rounded-sm rotate-12 shadow-[0_0_20px_#E50914]">
           <Film className="w-6 h-6 text-white -rotate-12" />
@@ -59,8 +59,8 @@ export default function Home() {
       <div className="flex items-center gap-4 md:gap-8">
         {view === "landing" && (
           <div className="hidden lg:flex items-center gap-12 text-[10px] font-black uppercase tracking-[0.2em] text-white/50 mr-8">
-            <a href="#" className="hover:text-white transition-colors">Technology</a>
-            <a href="#" className="hover:text-white transition-colors">Vision</a>
+            <a href="#technology" className="hover:text-white transition-colors">Technology</a>
+            <a href="#vision-video" className="hover:text-white transition-colors">Vision</a>
           </div>
         )}
         <button 
@@ -90,7 +90,7 @@ export default function Home() {
           <span className="text-[9px] font-black uppercase tracking-[0.2em]">The Hollywood Disruptor</span>
         </div>
         
-        <h1 className="text-[12vw] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter uppercase italic leading-[0.85] text-gradient">
+        <h1 className="text-5xl md:text-7xl lg:text-[8rem] font-black tracking-tighter uppercase italic leading-[0.85] text-gradient">
           Hollywood <br />
           <span className="text-accent italic">Autonomous.</span>
         </h1>
@@ -163,15 +163,16 @@ export default function Home() {
               <X className="w-8 h-8" />
             </button>
             
-            <div className="w-full h-full relative overflow-hidden">
+            <div className="w-full h-full relative overflow-hidden bg-black">
                <iframe 
-                src="https://player.vimeo.com/video/945934149?h=4f3c75d4f1&autoplay=1&title=0&byline=0&portrait=0" 
-                className="absolute inset-0 w-full h-full scale-110"
+                src="https://www.youtube.com/embed/oR_e9y-bka0?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0" 
+                className="absolute inset-0 w-full h-full scale-[1.35]"
                 frameBorder="0" 
                 allow="autoplay; fullscreen; picture-in-picture" 
                 allowFullScreen
                />
-               <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-[310] text-center space-y-6">
+               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-60" />
+               <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-[310] text-center space-y-6 w-full px-6">
                   <h2 className="text-4xl font-black uppercase italic tracking-tighter shadow-black drop-shadow-2xl">The Death of the Blockbuster Budget</h2>
                   <button 
                     onClick={() => { setShowVision(false); const el = document.getElementById('hero-apply'); el?.scrollIntoView({ behavior: 'smooth' }); }}
