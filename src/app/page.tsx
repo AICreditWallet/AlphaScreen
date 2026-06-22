@@ -48,24 +48,24 @@ export default function Home() {
   // --- SUB-COMPONENTS ---
 
   const Navbar = () => (
-    <nav className="fixed top-0 w-full z-[100] px-12 py-8 flex items-center justify-between pointer-events-none">
-      <div className="flex items-center gap-3 pointer-events-auto cursor-pointer" onClick={() => setView("landing")}>
+    <nav className="fixed top-0 w-full z-[150] px-6 md:px-12 h-24 flex items-center justify-between bg-black/50 backdrop-blur-2xl border-b border-white/5 pointer-events-auto">
+      <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView("landing")}>
         <div className="w-10 h-10 bg-accent flex items-center justify-center rounded-sm rotate-12 shadow-[0_0_20px_#E50914]">
           <Film className="w-6 h-6 text-white -rotate-12" />
         </div>
-        <span className="text-2xl font-black tracking-tighter uppercase italic">AlphaScreen</span>
+        <span className="text-xl md:text-2xl font-black tracking-tighter uppercase italic">AlphaScreen</span>
       </div>
       
-      <div className="flex items-center gap-8 pointer-events-auto">
+      <div className="flex items-center gap-4 md:gap-8">
         {view === "landing" && (
-          <div className="hidden md:flex items-center gap-12 text-[10px] font-black uppercase tracking-[0.2em] text-white/50 mr-8">
+          <div className="hidden lg:flex items-center gap-12 text-[10px] font-black uppercase tracking-[0.2em] text-white/50 mr-8">
             <a href="#" className="hover:text-white transition-colors">Technology</a>
             <a href="#" className="hover:text-white transition-colors">Vision</a>
           </div>
         )}
         <button 
           onClick={() => setView(view === "studio" ? "landing" : "pricing")}
-          className="glass-card px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all"
+          className="glass-card px-6 md:px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all pointer-events-auto"
         >
           {view === "studio" ? "Exit Studio" : "Launch Studio"}
         </button>
@@ -90,7 +90,7 @@ export default function Home() {
           <span className="text-[9px] font-black uppercase tracking-[0.2em]">The Hollywood Disruptor</span>
         </div>
         
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter uppercase italic leading-[1] text-gradient">
+        <h1 className="text-[12vw] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter uppercase italic leading-[0.85] text-gradient">
           Hollywood <br />
           <span className="text-accent italic">Autonomous.</span>
         </h1>
@@ -154,42 +154,32 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-6"
+            className="fixed inset-0 z-[300] bg-black flex items-center justify-center"
           >
             <button 
               onClick={() => setShowVision(false)}
-              className="absolute top-10 right-10 text-white/40 hover:text-white transition-colors"
+              className="absolute top-10 right-10 z-[310] text-white/40 hover:text-white transition-colors glass-card p-2 rounded-full"
             >
-              <X className="w-10 h-10" />
+              <X className="w-8 h-8" />
             </button>
-            <div className="max-w-4xl w-full space-y-12 overflow-y-auto max-h-[80vh] no-scrollbar pr-4">
-              <div className="space-y-4 text-center">
-                <span className="text-accent font-black uppercase tracking-[0.3em] text-[10px]">The Disruptor Vision</span>
-                <h2 className="text-5xl font-black uppercase italic tracking-tighter">The Death of the Blockbuster Budget</h2>
-              </div>
-              
-              <div className="grid gap-12">
-                 <div className="space-y-4">
-                    <p className="text-white/20 text-[10px] font-black uppercase tracking-widest">Scene 01: The Old Guard</p>
-                    <p className="text-2xl font-medium text-white/80 leading-relaxed italic">A dark, dusty traditional soundstage. Expensive camera rigs sitting idle. The silence of an industry that cost $200 million to enter.</p>
-                 </div>
-                 <div className="space-y-4">
-                    <p className="text-white/20 text-[10px] font-black uppercase tracking-widest">Scene 02: The Spark</p>
-                    <p className="text-2xl font-medium text-white/80 leading-relaxed italic">A single laptop screen glows. A prompt is typed. The code morphs into a high-fidelity 4K shot. One script. Zero crews.</p>
-                 </div>
-                 <div className="space-y-4">
-                    <p className="text-white/20 text-[10px] font-black uppercase tracking-widest">Scene 03: The Result</p>
-                    <p className="text-2xl font-medium text-white/80 leading-relaxed italic">A diverse creator hits "MASTER EXPORT." 2 hours of cinematic brilliance. Disrupting cinema for everyone.</p>
-                 </div>
-              </div>
-              <div className="pt-12 text-center">
-                 <button 
-                  onClick={() => setShowVision(false)}
-                  className="bg-accent text-white px-10 py-4 rounded-sm font-black uppercase tracking-widest hover:scale-105 transition-all"
-                 >
-                   Join the Waitlist
-                 </button>
-              </div>
+            
+            <div className="w-full h-full relative overflow-hidden">
+               <iframe 
+                src="https://player.vimeo.com/video/945934149?h=4f3c75d4f1&autoplay=1&title=0&byline=0&portrait=0" 
+                className="absolute inset-0 w-full h-full scale-110"
+                frameBorder="0" 
+                allow="autoplay; fullscreen; picture-in-picture" 
+                allowFullScreen
+               />
+               <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-[310] text-center space-y-6">
+                  <h2 className="text-4xl font-black uppercase italic tracking-tighter shadow-black drop-shadow-2xl">The Death of the Blockbuster Budget</h2>
+                  <button 
+                    onClick={() => { setShowVision(false); const el = document.getElementById('hero-apply'); el?.scrollIntoView({ behavior: 'smooth' }); }}
+                    className="bg-accent text-white px-10 py-4 rounded-sm font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_0_50px_#E50914]"
+                  >
+                    Secure Your Slot
+                  </button>
+               </div>
             </div>
           </motion.div>
         )}
