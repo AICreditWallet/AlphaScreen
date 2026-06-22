@@ -19,6 +19,7 @@ export default function Home() {
   const [view, setView] = useState<"landing" | "pricing" | "studio">("landing");
   const [shots, setShots] = useState<Shot[]>([]);
   const [projectType, setProjectType] = useState<"short" | "full" | null>(null);
+  const [showVision, setShowVision] = useState(false);
   
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -89,8 +90,8 @@ export default function Home() {
           <span className="text-[9px] font-black uppercase tracking-[0.2em]">The Hollywood Disruptor</span>
         </div>
         
-        <h1 className="text-7xl md:text-[8rem] lg:text-[10rem] font-black tracking-tighter uppercase italic leading-[0.8] text-gradient">
-          Cinema <br />
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter uppercase italic leading-[1] text-gradient">
+          Hollywood <br />
           <span className="text-accent italic">Autonomous.</span>
         </h1>
         
@@ -133,22 +134,73 @@ export default function Home() {
           </form>
         )}
         
-        <div className="pt-10">
+        <div className="pt-20">
           <button 
             onClick={() => {
               const el = document.getElementById('vision-video');
               el?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="text-white/40 hover:text-white text-[10px] font-black uppercase tracking-[0.3em] flex items-center gap-2 mx-auto transition-colors"
+            className="text-white hover:text-accent text-xs font-black uppercase tracking-[0.4em] flex items-center gap-3 mx-auto transition-all bg-white/5 px-8 py-4 rounded-full border border-white/10 hover:border-accent/50 hover:bg-accent/5"
           >
-            Watch the Vision <ArrowRight className="w-3 h-3 rotate-90" />
+            Watch the Vision <ArrowRight className="w-4 h-4 rotate-90" />
           </button>
         </div>
       </motion.div>
 
+      {/* Vision Modal Overlay */}
+      <AnimatePresence>
+        {showVision && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-6"
+          >
+            <button 
+              onClick={() => setShowVision(false)}
+              className="absolute top-10 right-10 text-white/40 hover:text-white transition-colors"
+            >
+              <X className="w-10 h-10" />
+            </button>
+            <div className="max-w-4xl w-full space-y-12 overflow-y-auto max-h-[80vh] no-scrollbar pr-4">
+              <div className="space-y-4 text-center">
+                <span className="text-accent font-black uppercase tracking-[0.3em] text-[10px]">The Disruptor Vision</span>
+                <h2 className="text-5xl font-black uppercase italic tracking-tighter">The Death of the Blockbuster Budget</h2>
+              </div>
+              
+              <div className="grid gap-12">
+                 <div className="space-y-4">
+                    <p className="text-white/20 text-[10px] font-black uppercase tracking-widest">Scene 01: The Old Guard</p>
+                    <p className="text-2xl font-medium text-white/80 leading-relaxed italic">A dark, dusty traditional soundstage. Expensive camera rigs sitting idle. The silence of an industry that cost $200 million to enter.</p>
+                 </div>
+                 <div className="space-y-4">
+                    <p className="text-white/20 text-[10px] font-black uppercase tracking-widest">Scene 02: The Spark</p>
+                    <p className="text-2xl font-medium text-white/80 leading-relaxed italic">A single laptop screen glows. A prompt is typed. The code morphs into a high-fidelity 4K shot. One script. Zero crews.</p>
+                 </div>
+                 <div className="space-y-4">
+                    <p className="text-white/20 text-[10px] font-black uppercase tracking-widest">Scene 03: The Result</p>
+                    <p className="text-2xl font-medium text-white/80 leading-relaxed italic">A diverse creator hits "MASTER EXPORT." 2 hours of cinematic brilliance. Disrupting cinema for everyone.</p>
+                 </div>
+              </div>
+              <div className="pt-12 text-center">
+                 <button 
+                  onClick={() => setShowVision(false)}
+                  className="bg-accent text-white px-10 py-4 rounded-sm font-black uppercase tracking-widest hover:scale-105 transition-all"
+                 >
+                   Join the Waitlist
+                 </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Disruptor Vision Section */}
       <section id="vision-video" className="relative z-10 w-full max-w-6xl mx-auto px-6 py-40">
-        <div className="glass-card aspect-video rounded-sm overflow-hidden relative group cursor-pointer border-white/20">
+        <div 
+          onClick={() => setShowVision(true)}
+          className="glass-card aspect-video rounded-sm overflow-hidden relative group cursor-pointer border-white/20 hover:border-accent/50 transition-all active:scale-[0.98]"
+        >
           <div className="absolute inset-0 bg-[url('https://sc02.alicdn.com/kf/A1a9265e4945f4ec899b32044a8b33441D.png')] bg-cover bg-center opacity-40 group-hover:scale-105 transition-transform duration-1000" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
           
