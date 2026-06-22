@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Play, Film, Sparkles, ShieldCheck, Zap, 
   ArrowRight, CreditCard, ChevronRight, X, 
-  LayoutDashboard, History, UserCircle, Mail, Loader2
+  Mail, Loader2, Menu
 } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
@@ -45,10 +45,8 @@ export default function Home() {
     }
   };
 
-  // --- SUB-COMPONENTS ---
-
   const Navbar = () => (
-    <nav className="fixed top-0 w-full z-[200] px-6 md:px-12 h-24 flex items-center justify-between bg-black/80 backdrop-blur-3xl border-b border-white/5 pointer-events-auto shadow-2xl">
+    <nav className="fixed top-0 w-full z-[200] px-6 md:px-12 h-24 flex items-center justify-between bg-black/80 backdrop-blur-3xl border-b border-white/5 pointer-events-auto">
       <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView("landing")}>
         <div className="w-10 h-10 bg-accent flex items-center justify-center rounded-sm rotate-12 shadow-[0_0_20px_#E50914]">
           <Film className="w-6 h-6 text-white -rotate-12" />
@@ -73,65 +71,65 @@ export default function Home() {
     </nav>
   );
 
-  // --- VIEWS ---
-
   const LandingView = () => (
-    <div className="relative min-h-screen flex flex-col items-center justify-center cinema-bg">
+    <div className="relative min-h-screen flex flex-col items-center justify-center cinema-bg pt-32">
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2059&auto=format&fit=crop')] bg-cover bg-center opacity-10 grayscale" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/80 to-black" />
 
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         className="relative z-10 text-center space-y-8 px-6 max-w-4xl"
       >
-        <div className="inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-4">
+        <div className="inline-flex items-center gap-2 glass-card px-5 py-2 rounded-full mb-4">
           <Sparkles className="w-3 h-3 text-accent" />
-          <span className="text-[9px] font-black uppercase tracking-[0.2em]">The Hollywood Disruptor</span>
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent">The Hollywood Disruptor</span>
         </div>
         
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase italic leading-[1.1] text-gradient">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase italic leading-[1] text-gradient">
           Cinema <br />
           <span className="text-accent italic">Reimagined.</span>
         </h1>
         
-        <p className="text-white/40 text-base md:text-lg max-w-xl mx-auto font-medium leading-relaxed">
-          Create high-fidelity, feature-length AI movies from a single script. Professional quality, consistent characters, zero budget barriers.
+        <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
+          Now anyone can create a 2-hour Hollywood-style movie with just a text prompt. Keep your characters exactly the same, with no million-dollar budget required.
         </p>
 
         {submitted ? (
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass-card p-6 rounded-sm border-emerald-500/20 bg-emerald-500/5 text-center space-y-2"
+            className="glass-card p-8 rounded-sm border-emerald-500/20 bg-emerald-500/5 text-center space-y-2 mt-8"
           >
             <ShieldCheck className="w-8 h-8 text-emerald-500 mx-auto" />
-            <h3 className="text-xl font-bold uppercase italic">Application Received</h3>
+            <h3 className="text-xl font-bold uppercase italic text-white">Application Received</h3>
             <p className="text-white/40 text-sm">We will contact you for your first production briefing.</p>
           </motion.div>
         ) : (
-          <form id="hero-apply" onSubmit={(e) => handleJoinWaitlist(e)} className="relative max-w-md mx-auto w-full group scroll-mt-40">
-            <div className="flex flex-col md:flex-row gap-2">
-              <div className="relative flex-1">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
-                <input 
-                  type="email" 
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your professional email"
-                  className="w-full bg-white/5 border border-white/10 rounded-sm py-4 pl-12 pr-4 text-sm font-medium focus:outline-none focus:border-accent transition-all"
-                />
+          <div className="mt-12 space-y-6">
+            <form id="hero-apply" onSubmit={(e) => handleJoinWaitlist(e)} className="relative max-w-md mx-auto w-full group scroll-mt-40">
+              <div className="flex flex-col md:flex-row gap-2">
+                <div className="relative flex-1">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
+                  <input 
+                    type="email" 
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Professional Email"
+                    className="w-full bg-white/5 border border-white/10 rounded-sm py-4 pl-12 pr-4 text-sm font-medium focus:outline-none focus:border-accent transition-all"
+                  />
+                </div>
+                <button 
+                  disabled={loading}
+                  className="bg-accent hover:bg-accent-hover text-white px-10 py-4 rounded-sm font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 transition-all shadow-[0_0_30px_rgba(229,9,20,0.3)] disabled:opacity-50 active:scale-95"
+                >
+                  {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Apply Now"}
+                </button>
               </div>
-              <button 
-                disabled={loading}
-                className="bg-accent hover:bg-accent-hover text-white px-8 py-4 rounded-sm font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 transition-all shadow-[0_0_30px_rgba(229,9,20,0.3)] disabled:opacity-50"
-              >
-                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Apply Now"}
-              </button>
-            </div>
-            <p className="text-[9px] text-white/20 uppercase font-black tracking-widest mt-4">Limited Production Slots Available for 2026</p>
-          </form>
+            </form>
+            <p className="text-[10px] text-white/30 uppercase font-black tracking-[0.2em]">Get early access to the world’s most advanced AI movie generator. Limited 2026 slots available.</p>
+          </div>
         )}
         
         <div className="pt-20">
@@ -212,7 +210,7 @@ export default function Home() {
   const PricingView = () => (
     <div className="min-h-screen pt-40 px-12 pb-20 space-y-16">
       <div className="text-center space-y-4">
-        <h2 className="text-5xl font-black uppercase tracking-tighter">Choose Your <span className="text-accent">Production</span></h2>
+        <h2 className="text-5xl font-black uppercase tracking-tighter text-white">Choose Your <span className="text-accent">Production</span></h2>
         <p className="text-white/40 font-medium">Select the scale of your story to enter the studio.</p>
       </div>
 
@@ -236,7 +234,7 @@ export default function Home() {
           </div>
           <div className="pt-8 border-t border-white/5">
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-4xl font-black text-gradient">$2,599</span>
+              <span className="text-4xl font-black text-white">$2,599</span>
               <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">/ Production</span>
             </div>
             <button 
@@ -244,6 +242,7 @@ export default function Home() {
                 setProjectType("short");
                 const el = document.getElementById('hero-apply');
                 el?.scrollIntoView({ behavior: 'smooth' });
+                setView("landing");
               }}
               className="w-full glass-card hover:bg-white hover:text-black py-4 rounded-sm font-black uppercase tracking-widest transition-all"
             >
@@ -272,7 +271,7 @@ export default function Home() {
           </div>
           <div className="pt-8 border-t border-white/5">
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-5xl font-black text-gradient">$8,999</span>
+              <span className="text-5xl font-black text-white">$8,999</span>
               <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">/ Production</span>
             </div>
             <button 
@@ -280,6 +279,7 @@ export default function Home() {
                 setProjectType("full");
                 const el = document.getElementById('hero-apply');
                 el?.scrollIntoView({ behavior: 'smooth' });
+                setView("landing");
               }}
               className="w-full bg-accent text-white py-4 rounded-sm font-black uppercase tracking-widest hover:bg-accent-hover transition-all shadow-[0_0_30px_rgba(229,9,20,0.3)]"
             >
@@ -300,7 +300,7 @@ export default function Home() {
              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
              <span className="text-[10px] font-black uppercase text-white/40 tracking-[0.2em]">Live Session: {projectType === "full" ? "Masterpiece" : "Short Epic"}</span>
           </div>
-          <h2 className="text-4xl font-black tracking-tighter uppercase italic">Autonomous <span className="text-accent">Studio</span></h2>
+          <h2 className="text-4xl font-black tracking-tighter uppercase italic text-white">Autonomous <span className="text-accent">Studio</span></h2>
         </div>
         
         <div className="flex items-center gap-4">
@@ -351,7 +351,7 @@ export default function Home() {
       <footer className="py-12 px-12 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-white/5 bg-black z-50 relative">
         <div className="flex items-center gap-2">
           <Film className="w-4 h-4 text-accent" />
-          <span className="text-xs font-black uppercase tracking-tighter">AlphaScreen PRO v1.0</span>
+          <span className="text-xs font-black uppercase tracking-tighter text-white">AlphaScreen PRO v1.0</span>
         </div>
         <div className="flex gap-8 text-[9px] font-black uppercase tracking-widest text-white/20">
            <a href="#">Privacy</a>
