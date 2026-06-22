@@ -12,14 +12,14 @@ const config: Config = {
         background: "#050505",
         foreground: "#ffffff",
         accent: {
-          DEFAULT: "#E50914", // Cinematic Red
+          DEFAULT: "#E50914",
           hover: "#B20710",
         },
-        card: "#121212",
+        card: "#0a0a0a",
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Bebas Neue', 'sans-serif'],
       },
     },
   },
