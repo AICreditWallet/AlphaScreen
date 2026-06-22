@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Play, Loader2, CheckCircle2, AlertCircle, Film, Maximize2, Download, Mic2, Music, Volume2, ShieldCheck } from "lucide-react";
+import { Loader2, CheckCircle2, Film, Maximize2, Download, Mic2, Volume2, ShieldCheck } from "lucide-react";
 import { Shot } from "@/lib/types";
 
 interface RenderStudioProps {

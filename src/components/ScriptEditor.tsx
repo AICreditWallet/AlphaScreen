@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Loader2, Film, Sparkles } from "lucide-react";
+import { Loader2, Film, Sparkles } from "lucide-react";
 import { Shot } from "@/lib/types";
 
 interface ScriptEditorProps {

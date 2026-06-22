@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Book, Globe, User, Clock, CloudRain, AlertTriangle } from "lucide-react";
+import { Book, Globe, Clock, CloudRain, AlertTriangle } from "lucide-react";
 
 export default function WorldBibleView() {
   // Mock data for the World Bible

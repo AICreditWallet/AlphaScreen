@@ -1,25 +1,6 @@
 import { NextResponse } from "next/server";
 import { worldBible } from "@/lib/world-bible";
 
-const SYSTEM_PROMPT = `
-You are a Hollywood Film Director and Cinematographer. 
-Your task is to take a raw script and break it down into a highly detailed, technical Shot List in JSON format.
-Each shot must be cinematic, considering lighting, camera lenses, and character consistency.
-
-### CONTINUITY RULES:
-You must respect the "World Bible" state provided in the input. 
-Ensure character clothing, physical injuries, and environmental states (like rain or wreckage) are consistent across all shots.
-
-For every shot, you must provide:
-- cameraAngle: Use cinematic terms (e.g., Anamorphic Close-up, Wide Tracking Shot).
-- lighting: Describe the light source and mood (e.g., Rembrandt lighting, Volumetric fog).
-- visualDescription: A detailed 2-sentence description of the visual frame.
-- prompt: A technical prompt optimized for high-end Video AI (Kling/Runway).
-- continuityNotes: Any changes to character status or environment that must be tracked for future shots.
-
-Output ONLY valid JSON matching the provided schema.
-`;
-
 export async function POST(req: Request) {
   try {
     const { script } = await req.json();
@@ -28,6 +9,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Script is required" }, { status: 400 });
     }
 
+    // SYSTEM_PROMPT would be used here in the OpenAI call
     const continuityContext = worldBible.getContinuityContext();
     console.log("Generating shots with continuity context:", continuityContext);
 

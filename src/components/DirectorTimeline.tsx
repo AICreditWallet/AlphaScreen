@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Film, Music, Mic2, Play, ChevronRight, LayoutGrid, List, Clock, Zap, Layers } from "lucide-react";
+import { Film, Music, Mic2, ChevronRight, Clock, Zap, Layers } from "lucide-react";
 import { Shot } from "@/lib/types";
 
 interface DirectorTimelineProps {
