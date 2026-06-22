@@ -4,9 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Play, Film, Sparkles, ShieldCheck, Zap, 
   ArrowRight, CreditCard, ChevronRight, X, 
-  LayoutDashboard, History, UserCircle
+  LayoutDashboard, History, UserCircle, Mail, Loader2
 } from "lucide-react";
 import { useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 import ScriptEditor from "@/components/ScriptEditor";
 import ActorStudio from "@/components/ActorStudio";
 import RenderStudio from "@/components/RenderStudio";
@@ -18,6 +19,30 @@ export default function Home() {
   const [view, setView] = useState<"landing" | "pricing" | "studio">("landing");
   const [shots, setShots] = useState<Shot[]>([]);
   const [projectType, setProjectType] = useState<"short" | "full" | null>(null);
+  
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleJoinWaitlist = async (e: React.FormEvent, type?: "short" | "full") => {
+    e.preventDefault();
+    if (!email) return;
+    setLoading(true);
+    
+    try {
+      const { error } = await supabase
+        .from('waitlist')
+        .insert([{ email, production_interest: type || projectType }]);
+      
+      if (error) throw error;
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Waitlist Error:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // --- SUB-COMPONENTS ---
 
@@ -57,34 +82,87 @@ export default function Home() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="relative z-10 text-center space-y-8 px-6"
+        className="relative z-10 text-center space-y-8 px-6 max-w-4xl"
       >
         <div className="inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-4">
           <Sparkles className="w-3 h-3 text-accent" />
-          <span className="text-[9px] font-black uppercase tracking-[0.2em]">The Netflix Disruptor</span>
+          <span className="text-[9px] font-black uppercase tracking-[0.2em]">The Hollywood Disruptor</span>
         </div>
         
-        <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter uppercase italic leading-[0.8] text-gradient">
+        <h1 className="text-7xl md:text-[8rem] lg:text-[10rem] font-black tracking-tighter uppercase italic leading-[0.8] text-gradient">
           Cinema <br />
           <span className="text-accent italic">Autonomous.</span>
         </h1>
         
         <p className="text-white/40 text-lg md:text-xl max-w-xl mx-auto font-medium">
-          The first AI engine capable of generating full-length Hollywood feature films from a single script.
+          Generate consistent, 2-hour Hollywood-grade feature films from a single script. No millions required.
         </p>
-        
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 pt-10">
-          <button 
-            onClick={() => setView("pricing")}
-            className="bg-accent hover:bg-accent-hover text-white px-12 py-5 rounded-sm font-black uppercase tracking-[0.2em] flex items-center gap-4 transition-all shadow-[0_0_40px_rgba(229,9,20,0.3)] hover:scale-105"
+
+        {submitted ? (
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="glass-card p-6 rounded-sm border-emerald-500/20 bg-emerald-500/5 text-center space-y-2"
           >
-            Start Your Epic <ArrowRight className="w-5 h-5" />
-          </button>
-          <button className="glass-card px-12 py-5 rounded-sm font-black uppercase tracking-[0.2em] flex items-center gap-4 hover:bg-white/5 transition-all">
-            Watch Vision
+            <ShieldCheck className="w-8 h-8 text-emerald-500 mx-auto" />
+            <h3 className="text-xl font-bold uppercase italic">Application Received</h3>
+            <p className="text-white/40 text-sm">We will contact you for your first production briefing.</p>
+          </motion.div>
+        ) : (
+          <form id="hero-apply" onSubmit={(e) => handleJoinWaitlist(e)} className="relative max-w-md mx-auto w-full group scroll-mt-40">
+            <div className="flex flex-col md:flex-row gap-2">
+              <div className="relative flex-1">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
+                <input 
+                  type="email" 
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your professional email"
+                  className="w-full bg-white/5 border border-white/10 rounded-sm py-4 pl-12 pr-4 text-sm font-medium focus:outline-none focus:border-accent transition-all"
+                />
+              </div>
+              <button 
+                disabled={loading}
+                className="bg-accent hover:bg-accent-hover text-white px-8 py-4 rounded-sm font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 transition-all shadow-[0_0_30px_rgba(229,9,20,0.3)] disabled:opacity-50"
+              >
+                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Apply Now"}
+              </button>
+            </div>
+            <p className="text-[9px] text-white/20 uppercase font-black tracking-widest mt-4">Limited Production Slots Available for 2026</p>
+          </form>
+        )}
+        
+        <div className="pt-10">
+          <button 
+            onClick={() => {
+              const el = document.getElementById('vision-video');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="text-white/40 hover:text-white text-[10px] font-black uppercase tracking-[0.3em] flex items-center gap-2 mx-auto transition-colors"
+          >
+            Watch the Vision <ArrowRight className="w-3 h-3 rotate-90" />
           </button>
         </div>
       </motion.div>
+
+      {/* Disruptor Vision Section */}
+      <section id="vision-video" className="relative z-10 w-full max-w-6xl mx-auto px-6 py-40">
+        <div className="glass-card aspect-video rounded-sm overflow-hidden relative group cursor-pointer border-white/20">
+          <div className="absolute inset-0 bg-[url('https://sc02.alicdn.com/kf/A1a9265e4945f4ec899b32044a8b33441D.png')] bg-cover bg-center opacity-40 group-hover:scale-105 transition-transform duration-1000" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+          
+          <div className="absolute inset-0 flex flex-col items-center justify-center space-y-6">
+            <div className="w-20 h-20 rounded-full bg-accent flex items-center justify-center shadow-[0_0_50px_#E50914] group-hover:scale-110 transition-transform">
+              <Play className="w-8 h-8 fill-current ml-1 text-white" />
+            </div>
+            <div className="text-center">
+              <h3 className="text-3xl font-black uppercase italic tracking-tighter">The Death of the Blockbuster Budget</h3>
+              <p className="text-white/40 text-sm uppercase font-black tracking-[0.2em]">Full Cinematic Reveal</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 
@@ -119,10 +197,14 @@ export default function Home() {
               <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">/ Production</span>
             </div>
             <button 
-              onClick={() => { setProjectType("short"); setView("studio"); }}
+              onClick={() => {
+                setProjectType("short");
+                const el = document.getElementById('hero-apply');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="w-full glass-card hover:bg-white hover:text-black py-4 rounded-sm font-black uppercase tracking-widest transition-all"
             >
-              Initialize Production
+              Apply for Production
             </button>
           </div>
         </motion.div>
@@ -151,10 +233,14 @@ export default function Home() {
               <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">/ Production</span>
             </div>
             <button 
-              onClick={() => { setProjectType("full"); setView("studio"); }}
+              onClick={() => {
+                setProjectType("full");
+                const el = document.getElementById('hero-apply');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="w-full bg-accent text-white py-4 rounded-sm font-black uppercase tracking-widest hover:bg-accent-hover transition-all shadow-[0_0_30px_rgba(229,9,20,0.3)]"
             >
-              Start Full Production
+              Apply for Full Production
             </button>
           </div>
         </motion.div>

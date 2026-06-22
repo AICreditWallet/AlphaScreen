@@ -54,11 +54,21 @@ create table shots (
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- 5. Enable Row Level Security (RLS)
+-- 5. Waitlist (Market Validation)
+create table waitlist (
+  id uuid default gen_random_uuid() primary key,
+  email text unique not null,
+  production_interest text, -- 'short' or 'full'
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- 6. Enable Row Level Security (RLS)
 alter table projects enable row level security;
 alter table characters enable row level security;
 alter table scenes enable row level security;
 alter table shots enable row level security;
+alter table waitlist enable row level security;
 
--- Add policies (Simplified for now: User can see/edit their own data)
+-- Add policies
 create policy "Users can manage their own projects" on projects for all using (auth.uid() = user_id);
+create policy "Anyone can join waitlist" on waitlist for insert with check (true);
