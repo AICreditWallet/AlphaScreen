@@ -90,13 +90,13 @@ export default function Home() {
           <span className="text-[9px] font-black uppercase tracking-[0.2em]">The Hollywood Disruptor</span>
         </div>
         
-        <h1 className="text-5xl md:text-7xl lg:text-[8rem] font-black tracking-tighter uppercase italic leading-[0.85] text-gradient">
-          Hollywood <br />
-          <span className="text-accent italic">Autonomous.</span>
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase italic leading-[1.1] text-gradient">
+          Cinema <br />
+          <span className="text-accent italic">Reimagined.</span>
         </h1>
         
-        <p className="text-white/40 text-lg md:text-xl max-w-xl mx-auto font-medium">
-          Generate consistent, 2-hour Hollywood-grade feature films from a single script. No millions required.
+        <p className="text-white/40 text-base md:text-lg max-w-xl mx-auto font-medium leading-relaxed">
+          Create high-fidelity, feature-length AI movies from a single script. Professional quality, consistent characters, zero budget barriers.
         </p>
 
         {submitted ? (
