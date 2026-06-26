@@ -73,7 +73,7 @@ export default function Home() {
   );
 
   const LandingView = () => (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <div className="relative min-h-screen flex flex-col items-center justify-start cinema-bg pt-56 pb-20">
       {/* Dynamic Background */}
       <div className="absolute inset-0 z-0">
         <video 
@@ -93,6 +93,7 @@ export default function Home() {
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto space-y-12"
       >
+
         <div className="space-y-4">
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
