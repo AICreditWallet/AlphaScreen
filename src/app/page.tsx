@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,7 +6,7 @@ import {
   ArrowRight, X, Mail, Loader2, ChevronRight,
   Maximize2, ChevronLeft, Volume2, VolumeX
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import ScriptEditor from "@/components/ScriptEditor";
 import ActorStudio from "@/components/ActorStudio";
@@ -53,25 +52,26 @@ export default function Home() {
   };
 
   const Navbar = () => (
-    <nav className="fixed top-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-[200] flex items-center justify-between px-10 h-24 bg-black/40 backdrop-blur-3xl rounded-full border border-white/10 pointer-events-auto shadow-2xl">
+    <nav className="fixed top-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-[200] flex items-center justify-between px-10 h-24 bg-white/5 backdrop-blur-3xl rounded-full border border-white/10 pointer-events-auto shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden">
       <div className="flex items-center gap-8 cursor-pointer relative z-10" onClick={() => setView("landing")}>
         <div className="relative group">
-          <img src="/logo.png" alt="AlphaScreen" className="h-16 w-16 object-contain filter brightness-125 drop-shadow-[0_0_25px_rgba(255,255,255,0.4)] group-hover:scale-110 transition-transform duration-700" />
-          <div className="absolute inset-0 bg-white/10 blur-3xl rounded-full scale-50 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <img src="/logo.png" alt="AlphaScreen" className="h-20 w-20 object-contain filter brightness-125 drop-shadow-[0_0_30px_rgba(255,255,255,0.4)] group-hover:scale-110 transition-transform duration-700" />
+          <div className="absolute inset-0 bg-white/20 blur-3xl rounded-full scale-50 opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
         <div className="h-10 w-px bg-white/10" />
         <div className="flex flex-col justify-center text-left">
           <span className="text-2xl font-black tracking-tighter uppercase italic text-white leading-none">AlphaScreen</span>
-          <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/30 mt-1.5">AI Autonomous Movie Generator</span>
+          <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white mt-2">AI Autonomous Movie Generator</span>
         </div>
       </div>
       
       <div className="flex items-center gap-8 relative z-10">
         <button 
           onClick={() => setIsMuted(!isMuted)}
-          className="p-4 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white transition-all hover:bg-white/10 hover:scale-110 active:scale-95"
+          className="p-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all hover:scale-110 active:scale-95"
+          title={isMuted ? "Unmute" : "Mute"}
         >
-          {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+          {isMuted ? <VolumeX className="w-6 h-6 text-white/60" /> : <Volume2 className="w-6 h-6 text-white" />}
         </button>
         <button 
           onClick={() => setView(view === "studio" ? "landing" : "pricing")}
@@ -84,7 +84,7 @@ export default function Home() {
   );
 
   const Carousel = () => (
-    <div className="relative w-full h-[750px] flex items-center justify-center perspective-2000 overflow-visible mt-12">
+    <div className="relative w-full h-[750px] flex items-center justify-center perspective-2000 overflow-visible mt-12 px-4">
       <AnimatePresence mode="popLayout">
         {carouselItems.map((item, index) => {
           const position = index - currentIndex;
@@ -97,20 +97,20 @@ export default function Home() {
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               onDragEnd={(_, info) => {
-                if (info.offset.x > 80 && currentIndex > 0) setCurrentIndex(currentIndex - 1);
-                if (info.offset.x < -80 && currentIndex < carouselItems.length - 1) setCurrentIndex(currentIndex + 1);
+                if (info.offset.x > 50 && currentIndex > 0) setCurrentIndex(currentIndex - 1);
+                if (info.offset.x < -50 && currentIndex < carouselItems.length - 1) setCurrentIndex(currentIndex + 1);
               }}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ 
-                opacity: absPosition === 0 ? 1 : absPosition === 1 ? 0.6 : 0.1,
+                opacity: absPosition === 0 ? 1 : absPosition === 1 ? 0.7 : 0.1,
                 scale: isCenter ? 1 : 0.85,
-                x: position * 500,
+                x: typeof window !== 'undefined' ? (window.innerWidth < 768 ? position * 280 : position * 500) : position * 500,
                 rotateY: position * -35,
                 z: absPosition * -250,
                 zIndex: 50 - absPosition
               }}
               transition={{ type: "spring", stiffness: 260, damping: 26 }}
-              className="absolute w-[550px] aspect-[4/5] glass-panel rounded-[3.5rem] overflow-hidden shadow-2xl cursor-grab active:cursor-grabbing border border-white/20 select-none"
+              className="absolute w-[90%] max-w-[550px] aspect-[4/5] glass-panel rounded-[3.5rem] overflow-hidden shadow-2xl cursor-grab active:cursor-grabbing border border-white/20 select-none"
               onClick={() => setCurrentIndex(index)}
             >
               <div className="relative h-full flex flex-col pointer-events-none">
@@ -241,7 +241,7 @@ export default function Home() {
           <h2 className="text-7xl font-black tracking-tighter uppercase italic text-white leading-none">Studio <span className="text-accent italic">Environment.</span></h2>
         </div>
         <div className="glass-panel px-12 py-6 rounded-full flex items-center gap-8 shadow-2xl border-white/10">
-           <Zap className="w-6 h-6 text-accent" />
+           <Zap className="w-8 h-8 text-accent" />
            <span className="text-base font-black uppercase tracking-[0.4em] text-white">Engine Ready</span>
         </div>
       </div>
