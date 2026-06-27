@@ -29,8 +29,8 @@ export default function Home() {
 
   const carouselItems = [
     { id: 1, title: "The Void Arrival", description: "Scene 01: Deep Space Exploration", video: "/1.mov" },
-    { id: 2, title: "Physical Peak", description: "Scene 89: Industrial Strength", video: "/3.mov" },
-    { id: 3, title: "Identity Lock", description: "Scene 42: Desert Persistence", video: "/2.mov" },
+    { id: 2, title: "Identity Lock", description: "Scene 42: Desert Persistence", video: "/3.mov" },
+    { id: 3, title: "Physical Peak", description: "Scene 89: Industrial Strength", video: "/2.mov" },
   ];
 
   const handleJoinWaitlist = async (e: React.FormEvent) => {
@@ -92,8 +92,8 @@ export default function Home() {
     }, []);
 
     const isMobile = winWidth < 768;
-    const cardWidth = isMobile ? winWidth * 0.9 : 750;
-    const xOffset = isMobile ? cardWidth * 0.95 : 680;
+    const cardWidth = isMobile ? winWidth * 0.85 : 750;
+    const xOffset = isMobile ? cardWidth * 0.9 : 680;
 
     return (
       <div className="relative w-full h-[550px] md:h-[750px] flex items-center justify-center perspective-2000 overflow-visible mt-24 md:mt-12 px-4">
@@ -108,15 +108,15 @@ export default function Home() {
                 key={item.id}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
+                dragElastic={0.5}
                 onDragEnd={(_, info) => {
-                  if (info.offset.x > 50 && currentIndex > 0) setCurrentIndex(currentIndex - 1);
-                  if (info.offset.x < -50 && currentIndex < carouselItems.length - 1) setCurrentIndex(currentIndex + 1);
+                  if (info.offset.x > 30 && currentIndex > 0) setCurrentIndex(currentIndex - 1);
+                  if (info.offset.x < -30 && currentIndex < carouselItems.length - 1) setCurrentIndex(currentIndex + 1);
                 }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ 
-                  opacity: absPosition === 0 ? 1 : absPosition === 1 ? 0.7 : 0.1,
-                  scale: isCenter ? 1 : 0.85,
+                  opacity: absPosition === 0 ? 1 : absPosition === 1 ? 0.8 : 0.1,
+                  scale: isCenter ? 1 : 0.88,
                   x: position * xOffset,
                   rotateY: position * -25,
                   z: absPosition * -300,
@@ -186,21 +186,21 @@ export default function Home() {
   };
 
   const LandingView = () => (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-32 md:py-40 cinema-bg">
+    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 md:py-32 cinema-bg">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(229,9,20,0.15)_0%,_transparent_60%)]" />
         <div className="absolute inset-0 bg-black" />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1600px] px-4 md:px-8 flex flex-col items-center space-y-32 md:space-y-48">
+      <div className="relative z-10 w-full max-w-[1600px] px-4 md:px-8 flex flex-col items-center space-y-12 md:space-y-32">
         <Carousel />
         
-        <div className="max-w-6xl text-center space-y-12 md:space-y-20">
-          <div className="space-y-6 md:space-y-10 px-4">
+        <div className="max-w-6xl text-center space-y-10 md:space-y-20">
+          <div className="space-y-6 md:space-y-10 px-4 text-center">
             <h1 className="text-5xl md:text-[9rem] font-black tracking-tighter uppercase italic leading-[0.85] text-white text-gradient">
               Cinema <br /><span className="text-accent not-italic">Reimagined.</span>
             </h1>
-            <p className="text-white/50 text-xl md:text-4xl max-w-5xl mx-auto font-medium leading-relaxed tracking-tight">
+            <p className="text-white/50 text-lg md:text-4xl max-w-5xl mx-auto font-medium leading-relaxed tracking-tight">
               Direct high-fidelity, consistent 2-hour movies from a single script. The world's first autonomous cinematic engine.
             </p>
           </div>
@@ -214,7 +214,7 @@ export default function Home() {
                </div>
             </motion.div>
           ) : (
-            <div className="space-y-12 md:space-y-16 px-4">
+            <div className="space-y-8 md:space-y-16 px-4">
               <form onSubmit={handleJoinWaitlist} className="relative max-w-4xl mx-auto w-full group">
                 <div className="flex flex-col md:flex-row gap-4 p-2.5 bg-white/5 backdrop-blur-3xl rounded-[2.5rem] md:rounded-full border border-white/20 shadow-[0_0_150px_rgba(0,0,0,0.9)] focus-within:border-accent/60 transition-all duration-700">
                   <input 
@@ -323,15 +323,15 @@ export default function Home() {
         {view === "pricing" && <motion.div key="pricing" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{duration: 1}}><PricingView /></motion.div>}
         {view === "studio" && <motion.div key="studio" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{duration: 1}}><StudioView /></motion.div>}
       </AnimatePresence>
-      <footer className="py-40 px-8 md:px-24 flex flex-col md:flex-row items-center justify-between gap-24 border-t border-white/10 bg-black z-50 relative text-left">
-        <div className="flex items-center gap-10 group cursor-pointer">
-          <img src="/logo.png" className="h-20 w-20 md:h-32 md:w-32 object-contain filter brightness-110 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]" />
+      <footer className="py-20 md:py-32 px-8 md:px-24 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-24 border-t border-white/10 bg-black z-50 relative text-left">
+        <div className="flex items-center gap-6 md:gap-10 group cursor-pointer">
+          <img src="/logo.png" className="h-16 w-16 md:h-24 md:w-24 object-contain filter brightness-110 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]" />
           <div className="flex flex-col">
-            <span className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white italic leading-none">AlphaScreen PRO</span>
-            <span className="text-sm font-bold text-white/30 uppercase tracking-[0.5em] mt-4">The Autonomous Studio v1.0</span>
+            <span className="text-xl md:text-3xl font-black uppercase tracking-tighter text-white italic leading-none">AlphaScreen PRO</span>
+            <span className="text-[10px] md:text-xs font-bold text-white/30 uppercase tracking-[0.2em] mt-2">The Autonomous Studio v1.0</span>
           </div>
         </div>
-        <p className="text-sm md:text-lg font-bold text-white/10 uppercase tracking-[0.6em]">© 2026 AlphaScreen. Disrupting Cinema.</p>
+        <p className="text-xs md:text-lg font-bold text-white/10 uppercase tracking-[0.6em]">© 2026 AlphaScreen. Disrupting Cinema.</p>
       </footer>
     </main>
   );
