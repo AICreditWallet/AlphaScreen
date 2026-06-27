@@ -50,9 +50,9 @@ export default function Home() {
   };
 
   const Navbar = () => (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-[200] flex items-center justify-between px-6 md:px-10 h-20 bg-black/40 backdrop-blur-3xl rounded-full border border-white/10 pointer-events-auto shadow-2xl">
+    <nav className="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-[200] flex items-center justify-between px-6 md:px-10 h-20 bg-black/40 backdrop-blur-3xl rounded-full border border-white/10 pointer-events-auto shadow-2xl">
       <div className="flex items-center gap-4 cursor-pointer" onClick={() => setView("landing")}>
-        <img src="/logo.png" alt="AlphaScreen" className="h-10 w-10 md:h-14 md:w-14 object-contain brightness-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]" />
+        <img src="/logo.png" alt="AlphaScreen" className="h-10 w-10 md:h-16 md:w-16 object-contain brightness-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]" />
         <div className="h-6 w-px bg-white/10" />
         <div className="flex flex-col text-left">
           <span className="text-lg md:text-xl font-black tracking-tighter uppercase italic text-white leading-none">AlphaScreen</span>
@@ -60,7 +60,7 @@ export default function Home() {
         </div>
       </div>
       
-      <div className="flex items-center gap-4 md:gap-8">
+      <div className="flex items-center gap-4">
         <button 
           onClick={() => setIsMuted(!isMuted)}
           className="p-3 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white"
@@ -88,10 +88,10 @@ export default function Home() {
 
     const isMobile = winWidth < 768;
     const cardWidth = isMobile ? winWidth * 0.8 : winWidth * 0.45;
-    const xOffset = isMobile ? cardWidth * 0.85 : cardWidth * 0.7;
+    const xOffset = isMobile ? cardWidth * 0.85 : cardWidth * 0.65;
 
     return (
-      <div className="relative w-full h-[400px] md:h-[550px] flex items-center justify-center perspective-2000 overflow-visible mt-16 px-4">
+      <div className="relative w-full h-[380px] md:h-[550px] flex items-center justify-center perspective-2000 overflow-visible mt-12 md:mt-24 px-4">
         <AnimatePresence mode="popLayout">
           {carouselItems.map((item, index) => {
             const position = index - currentIndex;
@@ -109,7 +109,7 @@ export default function Home() {
                 }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ 
-                  opacity: absPosition === 0 ? 1 : absPosition === 1 ? 0.6 : 0.05,
+                  opacity: absPosition === 0 ? 1 : absPosition === 1 ? 0.7 : 0.05,
                   scale: isCenter ? 1 : 0.75,
                   x: position * xOffset,
                   rotateY: position * -25,
@@ -167,21 +167,21 @@ export default function Home() {
   };
 
   const LandingView = () => (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-24 cinema-bg">
+    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-16 md:py-24 cinema-bg">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(229,9,20,0.1)_0%,_transparent_60%)]" />
         <div className="absolute inset-0 bg-black" />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1400px] px-8 flex flex-col items-center space-y-16 md:space-y-24">
+      <div className="relative z-10 w-full max-w-[1400px] px-8 flex flex-col items-center space-y-12 md:space-y-16">
         <Carousel />
 
-        <div className="max-w-4xl text-center space-y-8 md:space-y-12">
+        <div className="max-w-4xl text-center space-y-6 md:space-y-8">
           <div className="space-y-4 md:space-y-6">
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase italic leading-[0.9] text-white">
+            <h1 className="text-4xl md:text-7xl font-black tracking-tighter uppercase italic leading-[0.9] text-white">
               Cinema <br /><span className="text-accent not-italic">Reimagined.</span>
             </h1>
-            <p className="text-white/40 text-base md:text-xl max-w-2xl mx-auto font-medium leading-relaxed tracking-tight">
+            <p className="text-white/40 text-sm md:text-xl max-w-2xl mx-auto font-medium leading-relaxed tracking-tight">
               Direct high-fidelity, consistent 2-hour movies from a single script. The world's first autonomous cinematic engine.
             </p>
           </div>
@@ -203,16 +203,16 @@ export default function Home() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Professional Email"
-                  className="flex-1 bg-transparent py-4 md:py-5 px-8 md:px-12 text-sm md:text-lg font-medium focus:outline-none placeholder:text-white/20 text-white"
+                  className="flex-1 bg-transparent py-3.5 md:py-5 px-8 md:px-12 text-sm md:text-lg font-medium focus:outline-none placeholder:text-white/20 text-white"
                 />
                 <button 
                   disabled={loading}
-                  className="bg-white text-black px-12 md:px-16 py-4 md:py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] md:text-sm transition-all hover:bg-accent hover:text-white disabled:opacity-50 active:scale-95 shadow-xl"
+                  className="bg-white text-black px-12 md:px-16 py-3.5 md:py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] md:text-sm transition-all hover:bg-accent hover:text-white disabled:opacity-50 active:scale-95 shadow-xl"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Apply Access"}
                 </button>
               </div>
-              <p className="text-[10px] md:text-[11px] text-white/30 uppercase font-black tracking-[0.3em] mt-6">Get early access. Limited 2026 slots available.</p>
+              <p className="text-[9px] md:text-[10px] text-white/30 uppercase font-black tracking-[0.3em] mt-6">Get early access. Limited 2026 slots available.</p>
             </form>
           )}
         </div>
@@ -298,12 +298,12 @@ export default function Home() {
         {view === "pricing" && <motion.div key="pricing" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{duration: 0.8}}><PricingView /></motion.div>}
         {view === "studio" && <motion.div key="studio" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{duration: 0.8}}><StudioView /></motion.div>}
       </AnimatePresence>
-      <footer className="py-20 md:py-24 px-8 md:px-20 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20 border-t border-white/5 bg-black z-50 relative text-left">
-        <div className="flex items-center gap-6 group cursor-pointer">
+      <footer className="py-12 md:py-16 px-8 md:px-20 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 border-t border-white/5 bg-black z-50 relative text-left">
+        <div className="flex items-center gap-4 md:gap-6 group cursor-pointer">
           <img src="/logo.png" className="h-10 w-10 md:h-12 md:w-12 object-contain brightness-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
           <div className="flex flex-col">
-            <span className="text-lg md:text-2xl font-black uppercase tracking-tighter text-white italic leading-none">AlphaScreen PRO</span>
-            <span className="text-[8px] md:text-[9px] font-bold text-white/20 uppercase tracking-[0.3em] mt-2">The Autonomous Studio v1.0</span>
+            <span className="text-base md:text-xl font-black uppercase tracking-tighter text-white italic leading-none">AlphaScreen PRO</span>
+            <span className="text-[7px] md:text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mt-1.5">The Autonomous Studio v1.0</span>
           </div>
         </div>
         <div className="flex gap-8 md:gap-12 text-[9px] font-black uppercase tracking-[0.3em] text-white/20">
