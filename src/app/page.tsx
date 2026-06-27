@@ -50,26 +50,22 @@ export default function Home() {
   };
 
   const Navbar = () => (
-    <nav className="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-[200] flex items-center justify-between px-6 md:px-10 h-20 bg-black/40 backdrop-blur-3xl rounded-full border border-white/10 pointer-events-auto shadow-2xl">
-      <div className="flex items-center gap-4 cursor-pointer" onClick={() => setView("landing")}>
-        <img src="/logo.png" alt="AlphaScreen" className="h-10 w-10 md:h-16 md:w-16 object-contain brightness-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]" />
-        <div className="h-6 w-px bg-white/10" />
-        <div className="flex flex-col text-left">
-          <span className="text-lg md:text-xl font-black tracking-tighter uppercase italic text-white leading-none">AlphaScreen</span>
-          <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.4em] text-white/40 mt-1">AI Autonomous Movie Generator</span>
+    <nav className="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-[200] flex items-center justify-between px-6 md:px-12 h-24 bg-black/40 backdrop-blur-3xl rounded-full border border-white/20 pointer-events-auto shadow-2xl overflow-hidden">
+      <div className="flex items-center gap-4 md:gap-8 cursor-pointer relative z-10" onClick={() => setView("landing")}>
+        <div className="relative group">
+          <img src="/logo.png" alt="AlphaScreen" className="h-14 w-14 md:h-20 md:w-20 object-contain brightness-125 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] transition-transform duration-500" />
+        </div>
+        <div className="h-10 w-px bg-white/20" />
+        <div className="flex flex-col justify-center text-left">
+          <span className="text-xl md:text-2xl font-black tracking-tighter uppercase italic text-white leading-none">AlphaScreen</span>
+          <span className="text-[8px] md:text-[11px] font-black uppercase tracking-[0.4em] text-white/80 mt-1.5">AI Autonomous Movie Generator</span>
         </div>
       </div>
       
-      <div className="flex items-center gap-4">
-        <button 
-          onClick={() => setIsMuted(!isMuted)}
-          className="p-3 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white"
-        >
-          {isMuted ? <VolumeX className="w-4 h-4 md:w-5 md:h-5" /> : <Volume2 className="w-4 h-4 md:w-5 md:h-5" />}
-        </button>
+      <div className="flex items-center gap-6 relative z-10">
         <button 
           onClick={() => setView(view === "studio" ? "landing" : "pricing")}
-          className="bg-white text-black px-6 md:px-8 py-2 md:py-3 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest hover:bg-accent hover:text-white transition-all transform active:scale-95"
+          className="bg-white text-black px-8 md:px-12 py-3 md:py-4 rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.2em] hover:bg-accent hover:text-white transition-all transform active:scale-95 shadow-2xl"
         >
           {view === "studio" ? "Exit" : "Enter Studio"}
         </button>
@@ -87,8 +83,8 @@ export default function Home() {
     }, []);
 
     const isMobile = winWidth < 768;
-    const cardWidth = isMobile ? winWidth * 0.8 : winWidth * 0.45;
-    const xOffset = isMobile ? cardWidth * 0.85 : cardWidth * 0.65;
+    const cardWidth = isMobile ? winWidth * 0.8 : 750;
+    const xOffset = isMobile ? cardWidth * 0.85 : 680;
 
     return (
       <div className="relative w-full h-[380px] md:h-[550px] flex items-center justify-center perspective-2000 overflow-visible mt-12 md:mt-24 px-4">
@@ -118,7 +114,7 @@ export default function Home() {
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 style={{ width: cardWidth }}
-                className="absolute aspect-video bg-black rounded-[1.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl cursor-grab active:cursor-grabbing border border-white/30 select-none"
+                className="absolute aspect-video bg-black rounded-[1.5rem] md:rounded-[3.5rem] overflow-hidden shadow-2xl cursor-grab active:cursor-grabbing border border-white/30 select-none"
                 onClick={() => setCurrentIndex(index)}
               >
                 <div className="relative h-full flex flex-col pointer-events-none">
@@ -217,6 +213,17 @@ export default function Home() {
           )}
         </div>
       </div>
+      
+      {/* Floating Sound Control (Separated from Header to avoid overlap) */}
+      <div className="fixed bottom-10 right-10 z-[200]">
+        <button 
+          onClick={() => setIsMuted(!isMuted)}
+          className="p-5 rounded-full glass border border-white/20 text-white shadow-2xl transform hover:scale-110 active:scale-95 transition-all group"
+        >
+          {isMuted ? <VolumeX className="w-6 h-6 text-white/40 group-hover:text-white" /> : <Volume2 className="w-6 h-6 text-accent" />}
+          <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full scale-50 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </button>
+      </div>
     </div>
   );
 
@@ -298,12 +305,12 @@ export default function Home() {
         {view === "pricing" && <motion.div key="pricing" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{duration: 0.8}}><PricingView /></motion.div>}
         {view === "studio" && <motion.div key="studio" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{duration: 0.8}}><StudioView /></motion.div>}
       </AnimatePresence>
-      <footer className="py-12 md:py-16 px-8 md:px-20 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 border-t border-white/5 bg-black z-50 relative text-left">
-        <div className="flex items-center gap-4 md:gap-6 group cursor-pointer">
-          <img src="/logo.png" className="h-10 w-10 md:h-12 md:w-12 object-contain brightness-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
+      <footer className="py-12 md:py-20 px-8 md:px-24 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-20 border-t border-white/5 bg-black z-50 relative text-left">
+        <div className="flex items-center gap-6 group cursor-pointer">
+          <img src="/logo.png" className="h-10 w-10 md:h-12 md:w-12 object-contain brightness-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-transform duration-500" />
           <div className="flex flex-col">
-            <span className="text-base md:text-xl font-black uppercase tracking-tighter text-white italic leading-none">AlphaScreen PRO</span>
-            <span className="text-[7px] md:text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mt-1.5">The Autonomous Studio v1.0</span>
+            <span className="text-xl font-black uppercase tracking-tighter text-white italic leading-none">AlphaScreen PRO</span>
+            <span className="text-[8px] md:text-[9px] font-bold text-white/30 uppercase tracking-[0.3em] mt-1.5 leading-none">The Autonomous Studio v1.0</span>
           </div>
         </div>
         <div className="flex gap-8 md:gap-12 text-[9px] font-black uppercase tracking-[0.3em] text-white/20">
